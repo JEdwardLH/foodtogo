@@ -1,0 +1,292 @@
+
+<main class="trackorder">
+
+  <div class="process">
+    <div class="container">
+      <div class="horizontal-process text-center">
+        <div class="stagevideos stagevideo1">
+          <h1>Track - {{orderid}}</h1>
+
+          <div class="mapagm">
+            <agm-map #AgmMap id="trackmap" style="width: 100%;" [latitude]="focuslatitude" [longitude]="focuslongitude" [zoom]="zoom"
+            [mapTypeControl]='true'>
+            <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false" [iconUrl]="usermarker">
+            </agm-marker>
+            <agm-marker [agmFitBounds]="true" [latitude]="restolatitude" [longitude]="restolongitude" [markerDraggable]="false"
+              [iconUrl]="merchantmarker"></agm-marker>
+            <agm-marker [agmFitBounds]="true" [latitude]="riderlatitude" [longitude]="riderlongitude" [markerDraggable]="false"
+              [iconUrl]="ridermarker"></agm-marker>
+
+            <agm-polyline *ngFor="let point of points;let i = index;" [strokeColor]="point.speed < 50 ? '#2196f3': 'red'">
+              <agm-polyline-point [latitude]="point.latitude" [longitude]="point.longitude">
+              </agm-polyline-point>
+              <ng-container *ngIf="points[i+1]">
+                <agm-polyline-point [latitude]="points[i+1].latitude" [longitude]="points[i+1].longitude">
+                </agm-polyline-point>
+              </ng-container>
+            </agm-polyline>
+            </agm-map>
+          </div>
+        </div>
+        <!-- CANCEL ORDER -->
+        <!-- <div class="stagevideos stagevideo1">
+          <img src="https://foodtogodeliveryph.com/booking/assets/images/cancel_img.png" class="w-100" alt="cancel"/>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container time mt-4">
+    <div class="cancelorder_timer">
+      <span class="timertrack"  *ngIf="status != '3'">{{LanguageText.txt_trackorder_estimated_arrival_time}}</span>
+      <div class="value"  *ngIf="status != '3'">{{estimated_time}}</div>
+      <hr>
+
+      <!-- CANCEL ORDER -->
+      <div class="media" >
+        <div class="to_processing_stats"><img src="https://foodtogodeliveryph.com/public/images/logo/admin_276540829.png" style="width: 30px;" alt="processing"></div>
+        <div class="media-body" style="position: relative;">
+          <h2 class="mb-0 ttl_status_to" style="line-height: 1.2;">{{status_text}}</h2>
+          <h3 class="font13">{{status_message}}</h3>
+        </div>
+      </div>
+
+      <!-- Processing -->
+      <div class="media" >
+        <div class=""><img  style="height: 20px;margin-right: 10px" src="https://foodtogodeliveryph.com/booking/assets/images/address1.png"  alt="green dot"></div>
+        <div class="media-body" style="position: relative;">
+          <h2 class="mb-0 ttl_status_to" style="line-height: 1.2;">Pick Up Information <div class="btn_cancel_to" >{{bookingtype}}!</div></h2>
+          <p class="font13">Name: {{pickupname}}</p>
+          <p class="font13">Mobile: {{pickupmobile}}</p>
+        </div>
+      </div>
+
+      <!-- Food Cooking -->
+      <div class="media" >
+        <div class=""><img style="height: 20px;margin-right: 10px;" src="https://foodtogodeliveryph.com/booking/assets/images/address2.png"  alt="green dot"></div>
+        <div class="media-body" style="position: relative;">
+          <h2 class="mb-0 ttl_status_to" style="line-height: 1.2;">DropOff Information <div class="foodcooking_check"><img src="https://foodtogodeliveryph.com/booking/assets/images/to_trackcheck.png" alt="track check" class="w-100"/></div></h2>
+          <p class="font13">Name: {{dropoffname}}</p>
+          <p class="font13">Mobile: {{dropoffmobile}}</p>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+  <!-- START IN PICK UP RESTAURANT -->
+  <div class="container time" style="margin-top: 30px; padding-bottom: 0;" *ngIf="status != '1'&&status != '3'">
+    <div class="cancelorder_timer">
+      <div class="media">
+        <div class="to_rider_img"><img class="w-100" src="https://foodtogodeliveryph.com/booking/assets/images/man.png" alt="man"/></div>
+        <div class="media-body">
+          <h3 class="name_rider_to ">{{delivery_boy_name}} <span class="rider_yo_rating"><i class="fas fa-star" aria-hidden="true"></i> </span></h3>
+          <p class="mb-0 font13">{{mobile}}</p>
+        </div>
+      </div>
+      <ul class="rider_contact_to">
+
+
+      </ul>
+    </div>
+  </div>
+  <!-- MAKE A TIP -->
+  <div class="container time" style="margin-top: 30px;">
+    <div class="cancelorder_timer">
+      <h3 class="tip_ttl_to">Service Information</h3>
+
+      <h3 class="">Booking Type: {{bookingtype}}</h3>
+      <h3 class="">Item Type: {{item_type}}</h3>
+      <h3 class="">Weight: {{weight}} KG</h3>
+      <input class="form-control txt_enter_amnt_tip" [disabled]="true"/>
+    </div>
+  </div>
+  <!-- MAKE A TIP -->
+  <div class="container time" style="margin-top: 30px;">
+    <div class="cancelorder_timer">
+      <h3 class="tip_ttl_to">Instruction to rider</h3>
+
+      <h3 class="tip_to_enter_amount">{{instruction}}</h3>
+      <input class="form-control txt_enter_amnt_tip" [disabled]="true"/>
+    </div>
+  </div>
+
+
+  <!-- ORDER FOOD DETAILS -->
+  <div class="container tbltrackset" >
+    <div class="job-info-box orders">
+      <div class="row rowidth100">
+        <div class="col-12 col-sm-12 col-md-12">
+        <div class="name">{{store_name}} </div>
+        </div>
+        <table class="table tbltrack mb-0">
+
+          <tr>
+            <td class="productname2">Delivery Fee</td>
+            <td class="text-right productprice2">{{delfee}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table tbltrack">
+
+        <tr *ngFor="let item of productList">
+          <td class="productname"> {{bookingtype}}
+            <div class="trackextraname" *ngFor="let extra of item.productoption">
+              <div class="extrainv d-flex justify-content-between">
+              </div>
+              <div class="extrainv d-flex justify-content-between" *ngFor="let option of extra.extras">
+                <span class="inv_product_name mt-0">➤&nbsp;{{option.name}}</span>
+              </div>
+            </div>
+          </td>
+          <td class="productprice">{{item.price}}
+            <div class="trackextraprice" *ngFor="let extra of item.productoption">
+              <span class="inv_product_price"*ngFor="let option of extra.extras">{{option.price}}<br></span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="productname2">{{LanguageText.txt_invoice_total}}</td>
+          <td class="text-right productprice2">{{total}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="job-info-box2 orders" data-toggle="modal" data-target="#seedetails_md" hidden>
+      <div class="name">{{LanguageText.txt_ntrackorder_seedetails}}</div>
+      <div class="seedetails_arrow"><i class="fas fa-chevron-right" aria-hidden="true"></i></div>
+    </div>
+  </div>
+
+  <!-- START IN FOOD COOKING -->
+  <div class="container time" style="margin-top: 30px;">
+    <div class="cancelorder_timer">
+      <ul class="to_map_tracker">
+        <li>
+          <div class="media">
+            <div class="circle_border_red"></div>
+            <div class="media-body">
+              <div class="firstul_to">Pickup Location: {{address2}}</div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="media">
+            <div class="map_pin_to">
+              <img src="https://foodtogodeliveryph.com/booking/assets/images/lp_title-icon.png" alt="title" class="w-100"/>
+            </div>
+            <div class="media-body">
+              <div class="to_mtracker_address">DropOff Location: {{address}}</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="to_mtracker_meet">{{landmark}}</div>
+    </div>
+  </div>
+
+
+
+
+<!-- Receipt -->
+<div class="modal fade" id="seedetails_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="background: #ddddea;">
+        <button type="button" class="close_to_receipt" data-dismiss="modal">Close</button>
+        <div class="info_ttl_receipt">14 {{LanguageText.txt_ntrackorder_receiptforcustomer}}</div>
+        <div class="to_wrapper">
+          <div class="to_logo_receipt">
+            <img src="https://foodtogodeliveryph.com/public/images/logo/admin_276540829.png" alt="logo">
+          </div>
+          <div class="to_call_center">
+            <div>Call Center</div>
+            <div>02 821</div>
+          </div>
+          <div class="to_restaurant_name">{{store_name}}</div>
+          <div class="table-responsive">
+            <table class="table tbltrack2 mb-5">
+              <tr>
+                <td class="to_ttl_info">{{LanguageText.txt_ntrackorder_customer}} : Edward</td>
+                <td class="to_ttl_info2">{{LanguageText.txt_ntrackorder_date}} : 20/0420</td>
+              </tr>
+              <tr>
+                <td class="to_ttl_info">{{LanguageText.txt_ntrackorder_orderno}} : 123456789</td>
+                <td class="to_ttl_info2">{{LanguageText.txt_ntrackorder_time}} : 03:50pm</td>
+              </tr>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table tbltrack2">
+              <tr>
+                <td class="productname">2&nbsp;&nbsp; Cinamon Almond</td>
+                <td class="productprice">฿45</td>
+              </tr>
+              <!-- Comment -->
+              <tr class="to_commenthere">
+                <td colspan="2"><div>{{LanguageText.txt_ntrackorder_commenthere}}</div></td>
+              </tr>
+              <tr>
+                <td class="productname">2&nbsp;&nbsp; Cinamon Almond
+                  <div class="trackextraname">
+                    <div class="extrainv d-flex justify-content-between">
+                    </div>
+                    <div class="extrainv d-flex justify-content-between">
+                      <span class="inv_product_name2 mt-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Extra Name</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="productprice">฿45
+                  <div class="trackextraprice">
+                    <span class="inv_product_price">฿45<br></span>
+                  </div>
+                </td>
+              </tr>
+              <!-- Comment -->
+              <tr class="to_commenthere">
+                <td colspan="2"><div>{{LanguageText.txt_ntrackorder_commenthere}}</div></td>
+              </tr>
+              <tr class="totalstrack2">
+                <td class="totalttl">{{LanguageText.txt_trackorder_subtotal}}</td>
+                <td class="totalamounts">฿ 174</td>
+              </tr>
+              <tr class="totalstrack2">
+                <td class="totalttl first">{{LanguageText.txt_trackorder_discountoffer}}</td>
+                <td class="totalamounts first">- {{offer}}</td>
+              </tr>
+              <tr class="totalstrack2">
+                <td class="totalttl">{{LanguageText.txt_trackorder_deliveryfee}}</td>
+                <td class="totalamounts">฿0</td>
+              </tr>
+              <tr class="totalstrack2">
+                <td class="totalttl">{{LanguageText.txt_trackorder_grandtotal}}</td>
+                <td class="totalamounts">{{total}}</td>
+              </tr>
+              <tr class="totalstrack2">
+                <td class="totalttl">{{LanguageText.txt_ntrackorder_paymentype}}</td>
+                <td class="totalamounts">Cash</td>
+              </tr>
+              <tr class="totalstrack2">
+                <td class="totalttl">{{LanguageText.txt_ntrackorder_paymentid}}</td>
+                <td class="totalamounts">Cash</td>
+              </tr>
+            </table>
+          </div>
+          <div class="to_thank_you">{{LanguageText.txt_ntrackorder_tyorder}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<!-- <div>
+  <img src="https://foodtogodeliveryph.com/booking/assets/images/header2.png" style="width: 100%;" alt="green dot">
+</div> -->
+<div>
+  <img src="https://foodtogodeliveryph.com/booking/assets/images/footer2.png" style="width: 100%;" alt="green dot">
+</div>
+
