@@ -7,10 +7,10 @@ import { LoginComponent } from './pages/login/login.component';
 const routes: Routes = [
 
 {   path: '',
-    component: LoginComponent,
+    component: CheckoutComponent,
 },
 {   path: ':id',
-    component: LoginComponent,
+    component: CheckoutComponent,
 },
 {   path: 'login',
     component: RegisterComponent,

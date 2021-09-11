@@ -157,8 +157,10 @@ export class CheckoutComponent implements OnInit {
   usermarker:any
   usermarker2:any
   franchise = "guest";
+  franchisename = "Main"
   hours = []
   mins = []
+  invalid = false
   @ViewChild('search', { read: true, static: false })
   public searchElementRef: ElementRef;
 
@@ -181,13 +183,24 @@ export class CheckoutComponent implements OnInit {
     private actRoute: ActivatedRoute,
     public _sanitizer: DomSanitizer,
     private KbankService: KbankService) {
-      if(this.actRoute.snapshot.params.hasOwnProperty("id"))
-      this.franchise = this.actRoute.snapshot.params.id;
+      if(this.actRoute.snapshot.params.hasOwnProperty("id")){
+        this.franchise = this.actRoute.snapshot.params.id;
+        this.franchisename =this.actRoute.snapshot.params.id;
+        this.franchise = this.franchise.replace("-","")
+       
+      }else{
+        if(this.franchise == "guest"){
+          this.franchise = "main"
+          this.franchisename ="Main"
+        }
+      }
+      
 
 
   }
 
   ngOnInit(): void {
+    this.checkfn()
     console.log(this.franchise)
     this.instruction = ""
     this.usermarker = {
@@ -241,6 +254,24 @@ export class CheckoutComponent implements OnInit {
   {
       return Value * Math.PI / 180;
   }
+  checkfn(){
+    const headers = {  'Content-Type': 'application/json' }
+    const body = { city: this.franchise,lang:"en"};
+    this.LoginService.checkfranchise(body,headers).subscribe((data: any)=>{
+
+      if(data.code == 200){
+      
+        this.invalid = false
+      }else{
+        this.invalid = true
+        alert(data.message)
+      }
+
+    },(error: any) =>{
+
+    })
+  }
+
   selectbook(){
     this.bookingtypeval = this.bookingtype
     this.getlocationprice()
