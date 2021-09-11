@@ -2,10 +2,11 @@
 <main  class="authpages loginpage" *ngIf="!click&&screenWidth>575">
 <div class="container">
 <div class="form-box">
-<div class="title">GiftToGo</div>
-<span >Enter your account and claim the gift</span>
+<div class="title" *ngIf="!invalid" >GiftToGo "{{giftvalue}}"</div>
+<div class="title" *ngIf="invalid" >Oops! Page Not Found! </div>
+<span *ngIf="!invalid">Enter your account and claim the gift</span>
 
- <form action="#" >
+ <form action="#" *ngIf="!invalid">
   <div class="form-group icon-left">
     <div class="icon"><img class="w-100" src="https://foodtogodeliveryph.com/booking/assets/images/icon-mail-grey.png" alt=""/></div>
     <input type="email" class="form-control"  placeholder="Email" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
@@ -13,7 +14,7 @@
   </div>
 
 
-  <button type="submit" class="btn btn-primary"  (click)="claimgift()">Claim Gift</button>
+  <button type="submit" class="btn btn-primary"  (click)="claimgift()">Claim Gift </button>
 
 </form>
 

@@ -7,6 +7,7 @@ import { SocialUser } from "angularx-social-login";
 import{ GlobalConstants } from 'src/app/common/global-constants';
 import { StringTService } from '../../service/LanguageS/string-t.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,20 +23,25 @@ isLanguageLoaded = false;
   invalidcreds: boolean;
   click = false
   user: SocialUser;
+  id = "0"
+  giftvalue:string
   loggedIn: boolean;
   lang:string;
   message = ""
-  constructor(private LoginService: LoginService,private authService: SocialAuthService, private StringTServiceL: StringTService,public dialog: MatDialog) {
+  invalid = false
+  constructor(private LoginService: LoginService,private authService: SocialAuthService, private StringTServiceL: StringTService,private actRoute: ActivatedRoute,public dialog: MatDialog) {
     this.StringTServiceL.getLanguageString().subscribe((data: any)=>{
       this.isLanguageLoaded = true;
       this.LanguageText = data;
 
       })
+      if(this.actRoute.snapshot.params.hasOwnProperty("id"))
+      this.id = this.actRoute.snapshot.params.id;
 
   }
 
   ngOnInit(): void {
-
+    this.getgiftinfo()
 
   }
   openDialog(errormessage): void {
@@ -58,7 +64,7 @@ isLanguageLoaded = false;
   }
   claimgift(){
     const headers = {  'Content-Type': 'application/json' }
-    const body = { email: this.email,lang:"en"};
+    const body = { email: this.email,lang:"en",code:this.id};
     this.LoginService.claimgift(body,headers).subscribe((data: any)=>{
 
       if(data.code == 200){
@@ -71,6 +77,22 @@ isLanguageLoaded = false;
         }
       }else{
         this.openDialog(data.message)
+      }
+
+    },(error: any) =>{
+
+    })
+  }
+  getgiftinfo(){
+    const headers = {  'Content-Type': 'application/json' }
+    const body = { code: this.id,lang:"en"};
+    this.LoginService.giftinfo(body,headers).subscribe((data: any)=>{
+
+      if(data.code == 200){
+        this.giftvalue = data.data.text
+        this.invalid = false
+      }else{
+        this.invalid = true
       }
 
     },(error: any) =>{

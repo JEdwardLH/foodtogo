@@ -156,7 +156,7 @@ export class CheckoutComponent implements OnInit {
   scheduletype = "asap"
   usermarker:any
   usermarker2:any
-  cus_id = "guest";
+  franchise = "guest";
   hours = []
   mins = []
   @ViewChild('search', { read: true, static: false })
@@ -182,13 +182,13 @@ export class CheckoutComponent implements OnInit {
     public _sanitizer: DomSanitizer,
     private KbankService: KbankService) {
       if(this.actRoute.snapshot.params.hasOwnProperty("id"))
-      this.cus_id = this.actRoute.snapshot.params.id;
+      this.franchise = this.actRoute.snapshot.params.id;
 
 
   }
 
   ngOnInit(): void {
-    console.log(this.cus_id)
+    console.log(this.franchise)
     this.instruction = ""
     this.usermarker = {
       url: "https://foodtogodeliveryph.com/booking/assets/images/usermarker2.png",
@@ -248,6 +248,15 @@ export class CheckoutComponent implements OnInit {
   dateChange(date){
     this.birthday = this.formatDate(date)
 
+  }
+  setasap(){
+    
+    this.scheduletype = "asap"
+    console.log(this.scheduletype)
+  }
+  setsked(){
+    this.scheduletype = "schedule"
+    console.log(this.scheduletype)
   }
   applycontact1(){
     this.fullname = this.fullnameval
@@ -346,7 +355,7 @@ export class CheckoutComponent implements OnInit {
     timeanddate:this.hrsvalue+":"+this.minvalue+ " "+this.ampm,
     instruction:this.instruction,
     parceltype:this.parceltype,
-    cus_id:this.cus_id,
+    franchise:this.franchise,
     bookdate:this.bookdate
 
 

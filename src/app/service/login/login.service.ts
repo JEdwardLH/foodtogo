@@ -55,4 +55,8 @@ export class LoginService {
     return this.httpClient.post(GlobalConstants.APIEndPointCustomer + 'claimgift',body,{ headers })
 
   }
+  giftinfo(body,headers) {
+    return this.httpClient.post(GlobalConstants.APIEndPointCustomer + 'giftinfo',body,{ headers })
+
+  }
 }

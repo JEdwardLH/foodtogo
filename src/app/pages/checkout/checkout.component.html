@@ -263,17 +263,17 @@
                     <div class="col-md-6">
                       ASAP
                       <div class="selection-tick custom-checkbox">
-                        <input type="radio" name="scheduletype"  [(ngModel)]="scheduletype"
+                        <input type="radio" name="scheduletype" (click)="setasap()" [(ngModel)]="scheduletype"
                         [ngModelOptions]="{standalone: true}" [value]="'asap'">
-                        <span class="checkmark"></span>
+                        <span class="checkmark" (click)="setasap()"></span>
                       </div>
                     </div>
                     <div class="col-md-6">
                       Schedule
                       <div class="selection-tick custom-checkbox" >
-                        <input type="radio" name="scheduletype" [value]="'schedule'"   [(ngModel)]="scheduletype"
+                        <input type="radio" name="scheduletype" [value]="'schedule'" (click)="setsked()"  [(ngModel)]="scheduletype"
                         [ngModelOptions]="{standalone: true}">
-                        <span class="checkmark"></span>
+                        <span class="checkmark"  (click)="setsked()"></span>
                       </div>
                     </div>
 
