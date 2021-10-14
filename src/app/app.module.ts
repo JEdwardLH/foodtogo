@@ -97,7 +97,7 @@ import { LoginComponent } from './pages/login/login.component';
     RecaptchaV3Module,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBOJLYvW5jj_TfkLfQ9OfhFDfZijuWMbWI',
+      apiKey: 'AIzaSyD0Op5DpIRDOdjNpxAFLX3DdJT27k82Z_I',
       libraries: ['places']
     }),
     SocialLoginModule,

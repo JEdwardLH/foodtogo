@@ -1,13 +1,12 @@
 export const environment = {
   production: true,
   firebaseConfig : {
-    apiKey: "AIzaSyBOJLYvW5jj_TfkLfQ9OfhFDfZijuWMbWI",
-    authDomain: "foodtogo-customer.firebaseapp.com",
-    databaseURL: "https://foodtogo-customer-default-rtdb.firebaseio.com",
-    projectId: "foodtogo-customer",
-    storageBucket: "foodtogo-customer.appspot.com",
-    messagingSenderId: "598855931929",
-    appId: "1:598855931929:web:9b43c1d5fc167984a8f288",
-    measurementId: "G-0VN7CPQV0B"
+    apiKey: "AIzaSyBqNPX8lYZ0xtHmRA8Bi3emT_-0KE_tfbA",
+    authDomain: "ftg-cusotmer.firebaseapp.com",
+    projectId: "ftg-cusotmer",
+    storageBucket: "ftg-cusotmer.appspot.com",
+    messagingSenderId: "234950729942",
+    appId: "1:234950729942:web:30dfa4929fd19ef5a4e977",
+    measurementId: "G-409PVGLW1V"
   }
 };
